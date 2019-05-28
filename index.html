@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ko">
+ <head>
+	<meta charset="utf-8">
+	<title>Random</title>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	<script src="random.js"></script>
+	<script>
+
+		function result(){
+			var minNo = $('#minNo').val();
+			var maxNo = $('#maxNo').val();
+			var randomNo = $('#randomNo').val();
+			var sertType = $('#sortType option:selected').val();
+
+			var resultData = random.result(minNo, maxNo, randomNo, sertType);
+
+			if(resultData.isSucces){
+				
+				var resultHtml = '';
+				resultData.data.forEach(no => resultHtml += `<li>${no}</li>`);
+
+				$('#result').html(resultHtml);
+				$('#copyBtn').show();
+
+			}else{
+				$('#copyBtn').hide();
+				alert(resultData.msg);
+			}
+		}
+
+		String.prototype.replaceAll = function(org, dest) {
+			return this.split(org).join(dest);
+		}
+
+		$( document ).ready(function() {
+			$('#copyBtn').click(function(){
+				var html = $('#result').html();
+				html = html.replaceAll('<li>', '');
+				html = html.replaceAll('</li>', '\n');
+				console.log(html);
+				$('#clipBoard').show().val(html).select();
+				
+				var succeed;
+				try {
+					succeed = document.execCommand("copy");
+					$('#clipBoard').hide();
+
+				} catch(e) {
+					succeed = false;
+				}
+
+				if(succeed){
+					alert('복사 되었습니다');
+				}
+				return false;
+
+			});
+		});
+
+  </script>
+
+ </head>
+ <body>
+
+    <!--<h1>랜덤 추출</h1>-->
+
+    <div>
+       <input type="text" id="minNo" placeholder="최소값 입력" />
+       <input type="text" id="maxNo" placeholder="최대값 입력" />
+       <input type="text" id="randomNo" placeholder="추출수 입력" />
+       <select id="sortType" >
+            <option value="asc">오름차순</option>
+            <option value="desc">내림차순</option>
+       </select>
+       <input type="button" value="추출" onclick="result();" onsubmit="return false;"/>
+	   <input type="button" id="copyBtn" value="복사" onsubmit="return false;" style="display:none;"/>
+
+    </div>
+
+    <div id="result">
+        
+    </div>
+	<textarea id="clipBoard" style="display:none"></textarea>
+
+    
+ </body>
+</html>
