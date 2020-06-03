@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+</head>
+<body>
+<a id="kakao-link-btn" href="javascript:sendLink()">
+    <img
+            src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"
+    />
+</a>
+<script type="text/javascript">
+    // input your appkey
+    Kakao.init('5d572b23c63411705059e80d8d4c4953');
+
+    function sendLink() {
+        Kakao.Link.sendDefault({
+            objectType: 'feed',
+            content: {
+                title: '결혼합니다',
+                description: '방성용과 주혜란이 결혼합니다.',
+                imageUrl:
+                    'http://mcard.barunnfamily.com/Photos/202006/SB2964076/be7e6460-d3fc-40d4-81ae-17bcec942381.jpeg',
+                link: {
+                    mobileWebUrl: 'http://mcard.barunnfamily.com/SB2964076',
+                    webUrl: 'http://mcard.barunnfamily.com/SB2964076',
+                },
+            },
+            buttons: [
+                {
+                    title: '웹으로 보기',
+                    link: {
+                        mobileWebUrl: 'http://mcard.barunnfamily.com/SB2964076',
+                        webUrl: 'http://mcard.barunnfamily.com/SB2964076',
+                    },
+                }
+            ],
+        })
+    };
+</script>
+</body>
+</html>
